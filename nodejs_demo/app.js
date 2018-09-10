@@ -4,7 +4,7 @@ var path=require('path');
 var url=require('url');
 var events=require('events');
 var ejs=require('ejs');
-var router=require('./model/router.js');
+var router=require('./model/model.js');
 
 // var EventEmitter=new events.EventEmitter();
 // EventEmitter.on('getmime',function (result) {
@@ -48,9 +48,16 @@ http.createServer(function(req,res){
             req.on("data",function(chunk){
                 postStr+=chunk;
             });
-            req.on("end",function(err,chunk){
+            req.on("end",function(){
                 console.log(postStr);
-                res.end("<script>alert('登入成功');history.back()</script>");
+                fs.appendFile("./login.txt",postStr+"\n",function(err,data){
+                    if(err){
+                        console.log(err);
+                        return;
+                    }
+                    res.end("<script>alert('登入成功');history.back()</script>");
+                })
+                
             });
         }else{
             ejs.renderFile("./views/index.ejs",

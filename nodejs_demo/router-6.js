@@ -1,7 +1,7 @@
 var http= require('http')
 var ejs= require('ejs')
 var app= require('./model/route-express.js')
-console.log(app);
+// console.log(app);
 
 http.createServer(app).listen(8001);
 app.get("/",function(req,res){

@@ -20,9 +20,9 @@ var Server=function(){
         if (!pathname.endsWith("/")){
             pathname+="/";
         } 
-        console.log(pathname);
+        // console.log(pathname);
         var method=req.method.toLowerCase();/* 拿到请求方式*/
-        console.log(method);
+        // console.log(method);
         if (G["_"+method][pathname]) {
            if (method=="post") {
             postStr="";
@@ -30,7 +30,7 @@ var Server=function(){
                 postStr+=chunk;
             });
             req.on("end",function(){
-                console.log(postStr);
+                // console.log(postStr);
                 fs.appendFile("./login.txt",
                     postStr+"\n",
                     function(err,data){

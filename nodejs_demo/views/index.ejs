@@ -8,6 +8,12 @@
 </head>
 <body>
    <h2>这是一个后台模板引擎</h2>
-   <%=msg %>
+   <ul>
+
+    <%for(var i=0;i<list.length;i++){%>
+        <li><%=list[i].name%>----<%=list[i].url%></li>
+    <%}%>
+</ul>
+
 </body>
 </html>

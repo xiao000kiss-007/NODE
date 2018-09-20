@@ -1,11 +1,9 @@
 var express = require('express');
 var ejs=require('ejs');
 var bodyParser = require('body-parser');
-var session = require('express-session')
-const MongoClient = require('mongodb').MongoClient;
-const DbUrl = 'mongodb://localhost:27017';
-// Database Name
-const dbName = 'productmanage';
+var session = require('express-session');
+var md5 = require('md5-node');
+const DB=require('./modules/db.js');
 
 var app=new express()
 app.set('view engine','ejs');
@@ -46,7 +44,13 @@ app.get("/login",function(req,res){
 });
 app.get("/product",function(req,res){
     // res.send("product")
-    res.render('product.ejs');
+    //连接数据库
+    DB.find('product',{},function(err,data){
+        res.render('product.ejs',{
+            list:data
+        });
+      
+    });
 });
 app.get("/productadd",function(req,res){
     // res.send("productadd")
@@ -57,29 +61,26 @@ app.get("/productedit",function(req,res){
     res.render('productedit.ejs');
 });
 app.post("/doLogin", function(req,res){
-    console.log(req.body);
-    MongoClient.connect(DbUrl,
-        { useNewUrlParser: true }, 
-        function(err,client){
-        if(err){
-            console.log(err);
-            return;
+    const username=req.body.username;
+    const password=md5(req.body.password);
+    console.log(password);
+    //连接数据库
+    DB.find('user',
+    {
+        username:username,
+        password:password
+    },
+    function(err,data){
+        if(data.length>0){
+            console.log('登入成功');
+            req.session.userinfo=data[0];
+            res.redirect('/product');
+        }else{
+            console.log('登入失败');
+            res.send("<script>alert('登入失败');location.href='/login'</script>");
         }
-        const myDb=client.db(dbName);
-        const result=myDb.collection('user').find(req.body);
-        result.toArray(function(err,data){
-            console.log(data);
-            if(data.length>0){
-                console.log('登入成功');
-                req.session.userinfo=data[0];
-                res.redirect('/product');
-            }else{
-                console.log('登入失败');
-                res.send("<script>alert('登入失败');location.href='/login'</script>");
-            }
-            client.close();
-        })
-    })
+       
+    });
 });
 app.get('/loginOut',function(req,res){
     req.session.destroy(function(err){

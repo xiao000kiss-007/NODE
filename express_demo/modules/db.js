@@ -1,4 +1,5 @@
 const MongoClient = require('mongodb').MongoClient;
+const ObjectId=require('mongodb').ObjectId;
 const DbUrl = 'mongodb://localhost:27017';
 // Database Name
 const dbName = 'productmanage';
@@ -16,6 +17,8 @@ function __connetDb(callback){
     
     });
 }
+//暴露ObjectId
+exports.ObjectId=ObjectId;
 //查询数据
 exports.find=function(collectionname,json,callback){
         //连接数据库
@@ -23,7 +26,7 @@ exports.find=function(collectionname,json,callback){
         const myDb=client.db(dbName);
         const result=myDb.collection(collectionname).find(json);
         result.toArray(function(err,data){
-            console.log(data);
+            // console.log(data);
             client.close();//关闭数据库
             callback(err,data);//拿到数据执行回调函数
         });
@@ -47,7 +50,7 @@ exports.update=function(collectionname,json1,json2,callback){
     //连接数据库
 __connetDb(function(client){
     const myDb=client.db(dbName);
-    myDb.collection(collectionname).update(json1,{$set:json2},function(err,data){
+    myDb.collection(collectionname).updateOne(json1,{$set:json2},function(err,data){
         callback(err,data);
     });
 

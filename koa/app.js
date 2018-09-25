@@ -4,7 +4,8 @@ const Koa=require('koa'),
       path = require('path'),
       bodyParser = require('koa-bodyparser'),
       static = require('koa-static'),
-      DB=require('./module/db.js')
+      session = require('koa-session');
+    
 /*引入子模块*/      
 const admin=require('./routes/admin.js')
 const api=require('./routes/api.js')
@@ -13,6 +14,20 @@ const index=require('./routes/index.js')
 const app=new Koa()
 /**引入配置bodyParser中间件 */
 app.use(bodyParser());
+//配置session的中间件
+app.keys = ['some secret hurr'];
+const CONFIG = {
+    key: 'koa:sess',
+    maxAge: 86400000,
+    autoCommit: true, 
+    overwrite: true, 
+    httpOnly: true, 
+    signed: true, 
+    rolling: false,/*每次请求都重新设置session*/ 
+    renew: false, 
+};
+app.use(session(CONFIG, app));
+
 /**引入配置静态资源加载中间件 */
 app.use(static(
     path.join( __dirname,  'statics')

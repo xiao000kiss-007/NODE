@@ -1,45 +1,28 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<title>后台管理系统登录</title>		
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../../../favicon.ico">
 
-		<!-- basic styles -->
+    <title>HS管理系统</title>
 
-		<link href="{{__HOST__}}/admin/css/bootstrap.min.css" rel="stylesheet" />
-		<link rel="stylesheet" href="{{__HOST__}}/admin/css/font-awesome.min.css" />
+    <!-- Bootstrap core CSS -->
+    <link href="{{__HOST__}}/admin/css/bootstrap.min.css" rel="stylesheet">
 
-		<!-- fonts -->
-		<link rel="stylesheet" href="{{__HOST__}}/admin/css/ace.min.css" />
-		<link rel="stylesheet" href="{{__HOST__}}/admin/css/ace-rtl.min.css" />
-		<script src='{{__HOST__}}/admin/js/jquery-2.0.3.min.js'></script>
-
-		<style type="text/css">
-			.login-layout{
-				background: #428bca;
-			}
-			.login-layout .widget-box{
-				background-color:#428bca;
-			}
-			.login-layout .widget-box .widget-main{
-				padding:26px 16px;
-			}
-			.login-container{
-				padding-top: 80px;
-			}
-			.header{
-				margin-top:0px;
-				padding-bottom: 12px;
-			}
-		</style>
-		<script>
+    <!-- Custom styles for this template -->
+    <link href="{{__HOST__}}/admin/css/signin.css" rel="stylesheet">
+    <script src='{{__HOST__}}/admin/js/jquery_3.2.1_jquery.slim.min.js'></script>
+    <script src='{{__HOST__}}/admin/js/popper.js_1.12.9_umd_popper.min'></script>
+    <script>
 			$(function(){
 				$('#code').click(function(){
 					$(this).attr('src','{{__ROOT__}}/admin/login/code?t='+Math.random()*1000)
 				})
 				$("#loginForm").submit(function(){
-					if($('#username').val()=='' || $("#password").val()=='' || $("#code1").val()==''){
+					if($('#username').val()=='' || $("#password").val()=='' || $("#inputCode").val()==''){
 						alert('用户名或者密码或者验证码不能为空')
 						return false;
 					}
@@ -47,85 +30,30 @@
 				})
 			})
 		</script>
-	</head>
+  </head>
 
-	<body class="login-layout">
-		<div class="main-container">
-			<div class="main-content">
-				<div class="row">
-					<div class="col-sm-10 col-sm-offset-1">
-						<div class="login-container">
-						
-							<div class="position-relative">
-								<div id="login-box" class="login-box visible widget-box no-border">
-									<div class="widget-body">
-										<div class="widget-main">
-											
-											<h2 class="header blue lighter bigger center">
-												HS管理系统
-												
-											</h2>
-
-											<div class="space-6"></div>
-
-											<form action="{{__HOST__}}/admin/login/doLogin" method="post"  id="loginForm">
-												<fieldset>
-													<label class="block clearfix">
-														<span class="block input-icon input-icon-right">
-															<input id="username" type="text" class="form-control" name="username" placeholder="用户名" />
-															<i class="icon-user"></i>
-														</span>
-													</label>
-
-													<label class="block clearfix">
-														<span class="block input-icon input-icon-right">
-															<input id="password" type="password" class="form-control" name="password" placeholder="密码" />
-															<i class="icon-lock"></i>
-														</span>
-													</label>
-
-													<label class="block clearfix">
-														<span class="block input-icon input-icon-right">
-															<input type="text" class="form-control" placeholder="验证吗" name="code" id="code1" style="width:200px;float:left;" />
-															<img id="code" src="{{__ROOT__}}/admin/login/code" alt="">
-														</span>
-													</label>
-
-													<div class="space"></div>
-
-													<div class="clearfix">
-														<label class="inline">
-															<input type="checkbox" class="ace" />
-															<span class="lbl"> Remember Me</span>
-														</label>
-
-														<button type="submit" class="width-35 pull-right btn btn-sm btn-primary">
-															<i class="icon-key"></i>
-															登录
-														</button>
-													</div>
-
-													<div class="space-4"></div>
-												</fieldset>
-											</form>
-
-											
-											
-										</div><!-- /widget-main -->
-
-										
-									</div><!-- /widget-body -->
-								</div><!-- /login-box -->
-							
-							</div><!-- /position-relative -->
-						</div>
-					</div><!-- /.col -->
-				</div><!-- /.row -->
-			</div>
-		</div><!-- /.main-container -->
-
-		<!-- basic scripts -->
-
-	
-</body>
+  <body class="text-center">
+    <form class="form-signin" action="{{__HOST__}}/admin/login/doLogin" method="post"  id="loginForm">
+      <img class="mb-4" src="https://getbootstrap.com/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">
+      <h1 class="h3 mb-3 font-weight-normal">HS管理系统</h1>
+      <label for="inputEmail" class="sr-only"></label>
+      <input type="text" id="inputName" class="form-control" placeholder="用户名" name="username">
+      <label for="inputPassword" class="sr-only"></label>
+      <input type="password" id="inputPassword" class="form-control" placeholder="密码" name="password">
+      <div class="inputCode">
+        <label for="inputCode" class="sr-only"></label>
+        <span class="block input-icon input-icon-right">
+          <input type="text" class="form-control" placeholder="验证吗" name="code" id="inputCode" />
+          <img id="code" src="{{__ROOT__}}/admin/login/code" alt="">
+        </span>
+      </div>
+      <div class="checkbox mb-3" id="remember">
+        <label>
+          <input type="checkbox" value="remember-me">记住账号密码
+        </label>
+      </div>
+      <button class="btn btn-lg btn-primary btn-block" type="submit">登录</button>
+      <p class="mt-5 mb-3 text-muted">&copy;深圳市恒深财务服务有限公司2017-2018</p>
+    </form>
+  </body>
 </html>

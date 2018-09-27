@@ -43,14 +43,19 @@ body {
 .form-signin input[type="password"] {
   margin-bottom: 10px;
 }
+.inputCode{
+  float:left;
+}
 #remember{
-  margin-top: 40px;
+  margin-top: 10px;
+  float: left;
 }
 #inputCode{
   width: 160px;
   float:left;
+  margin-right: 10px;
 }
 #code{
-  margin-top:5px;
+  margin-top:6px;
 
 }
